@@ -1,6 +1,8 @@
-﻿//Author: David Barnes
+﻿//Author: Alyssa Mahler
 //CIS 237
-//Assignment 1
+//Assignment 5
+// This class handles output to the user and gets input.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,7 @@ namespace assignment1
 {
     class UserInterface
     {
-        const int maxMenuChoice = 5;
+        const int maxMenuChoice = 7;
         //---------------------------------------------------
         //Public Methods
         //---------------------------------------------------
@@ -60,21 +62,43 @@ namespace assignment1
             return Console.ReadLine();
         }
 
-        //Get New Item Information From The User.
-        public string[] GetNewItemInformation()
+        public string GetUpdateId()
         {
             Console.WriteLine();
-            Console.WriteLine("What is the new items Id?");
+            Console.WriteLine("What is the id of the item to update?");
+            Console.Write("> ");
+            return Console.ReadLine();
+        }
+
+        public string GetDeleteId()
+        {
+            Console.WriteLine();
+            Console.WriteLine("What is the id of the item to delete?");
+            Console.Write("> ");
+            return Console.ReadLine();
+        }
+
+        //Get New Item Information From The User.
+        public string[] GetItemInformation()
+        {
+            Console.WriteLine();
+            Console.WriteLine("What is the item's Id?");
             Console.Write("> ");
             string id = Console.ReadLine();
-            Console.WriteLine("What is the new items Description?");
+            Console.WriteLine("What is the item's Description?");
             Console.Write("> ");
             string description = Console.ReadLine();
-            Console.WriteLine("What is the new items Pack?");
+            Console.WriteLine("What is the item's Pack?");
             Console.Write("> ");
             string pack = Console.ReadLine();
+            Console.WriteLine("What is the item's Price?");
+            Console.Write("> ");
+            string price = Console.ReadLine();
+            Console.WriteLine("Is the item Active? (Y or N)");
+            Console.Write("> ");
+            string isActive = Console.ReadLine();
 
-            return new string[] { id, description, pack };
+            return new string[] { id, description, pack, price, isActive };
         }
 
         //Display Import Success
@@ -88,7 +112,7 @@ namespace assignment1
         public void DisplayImportError()
         {
             Console.WriteLine();
-            Console.WriteLine("There was an error importing the CSV");
+            Console.WriteLine("There was an error importing the Wine List");
         }
 
         //Display All Items
@@ -137,6 +161,34 @@ namespace assignment1
             Console.WriteLine("An Item With That Id Already Exists");
         }
 
+        // Display Update Item Success
+        public void DisplayItemUpdateSuccess()
+        {
+            Console.WriteLine();
+            Console.WriteLine("The item was successfully updated!");
+        }
+
+        // Display Update Item Error
+        public void DisplayItemUpdateError()
+        {
+            Console.WriteLine();
+            Console.WriteLine("The item was not updated.");
+        }
+
+        // Display Delete Item Success
+        public void DisplayItemDeleteSuccess()
+        {
+            Console.WriteLine();
+            Console.WriteLine("The item was successfully deleted!");
+        }
+
+        // Display Delete Item Error
+        public void DisplayItemDeleteError()
+        {
+            Console.WriteLine();
+            Console.WriteLine("The item was not deleted.");
+        }
+
 
         //---------------------------------------------------
         //Private Methods
@@ -152,7 +204,9 @@ namespace assignment1
             Console.WriteLine("2. Print The Entire List Of Items");
             Console.WriteLine("3. Search For An Item");
             Console.WriteLine("4. Add New Item To The List");
-            Console.WriteLine("5. Exit Program");
+            Console.WriteLine("5. Update An Item In The List");
+            Console.WriteLine("6. Delete An Item From The List");
+            Console.WriteLine("7. Exit Program");
         }
 
         //Display the Prompt

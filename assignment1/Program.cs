@@ -1,14 +1,7 @@
-﻿//Author: David Barnes
+﻿//Author: Alyssa Strand
 //CIS 237
-//Assignment 1
-/*
- * The Menu Choices Displayed By The UI
- * 1. Load Wine List From CSV
- * 2. Print The Entire List Of Items
- * 3. Search For An Item
- * 4. Add New Item To The List
- * 5. Exit Program
- */
+//Assignment 5
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,20 +14,12 @@ namespace assignment1
     {
         static void Main(string[] args)
         {
-            //Set a constant for the size of the collection
-            const int wineItemCollectionSize = 4000;
-
-            //Set a constant for the path to the CSV File
-            const string pathToCSVFile = "../../../datafiles/winelist.csv";
 
             //Create an instance of the UserInterface class
             UserInterface userInterface = new UserInterface();
 
             //Create an instance of the WineItemCollection class
-            IWineCollection wineItemCollection = new WineItemCollection(wineItemCollectionSize);
-
-            //Create an instance of the CSVProcessor class
-            CSVProcessor csvProcessor = new CSVProcessor();
+            WineItemCollection wineItemCollection = new WineItemCollection();
 
             //Display the Welcome Message to the user
             userInterface.DisplayWelcomeGreeting();
@@ -43,23 +28,12 @@ namespace assignment1
             //This is the 'primer' run of displaying and getting.
             int choice = userInterface.DisplayMenuAndGetResponse();
 
-            while (choice != 5)
+            while (choice != 7)
             {
                 switch (choice)
                 {
                     case 1:
-                        //Load the CSV File
-                        bool success = csvProcessor.ImportCSV(wineItemCollection, pathToCSVFile);
-                        if (success)
-                        {
-                            //Display Success Message
-                            userInterface.DisplayImportSuccess();
-                        }
-                        else
-                        {
-                            //Display Fail Message
-                            userInterface.DisplayImportError();
-                        }
+                        userInterface.DisplayImportSuccess();
                         break;
 
                     case 2:
@@ -92,16 +66,49 @@ namespace assignment1
                         break;
 
                     case 4:
-                        //Add A New Item To The List
-                        string[] newItemInformation = userInterface.GetNewItemInformation();
-                        if (wineItemCollection.FindById(newItemInformation[0]) == null)
+                            // Add A New Item To The List
+                        string[] newItemInformation = userInterface.GetItemInformation();
+                            // Convert the price to a decimal:
+                        decimal price = Convert.ToDecimal(newItemInformation[3]);
+                            // Set a boolean to hold whether the item is active:
+                        bool active = false;
+                            // If the input was Y for yes, set active to true:
+                        if (newItemInformation[4] == "Y")
                         {
-                            wineItemCollection.AddNewItem(newItemInformation[0], newItemInformation[1], newItemInformation[2]);
+                            active = true;
+                        }
+                        // Send info to WineItemCollection to add a new item:
+                        if (wineItemCollection.AddNewItem(newItemInformation[0], newItemInformation[1], newItemInformation[2], price, active))
+                        {
                             userInterface.DisplayAddWineItemSuccess();
                         }
                         else
                         {
                             userInterface.DisplayItemAlreadyExistsError();
+                        }
+                        break;
+                    case 5:
+                        // Update an item in the list:
+                        string idUpdate = userInterface.GetUpdateId();
+                        if (wineItemCollection.UpdateBeverageItem(idUpdate))
+                        {
+                            userInterface.DisplayItemUpdateSuccess();
+                        }
+                        else
+                        {
+                            userInterface.DisplayItemUpdateError();
+                        }
+                        break;
+                    case 6:
+                        // Delete an item from the list:
+                        string idDelete = userInterface.GetDeleteId();
+                        if (wineItemCollection.DeleteBeverageItem(idDelete))
+                        {
+                            userInterface.DisplayItemDeleteSuccess();
+                        }
+                        else
+                        {
+                            userInterface.DisplayItemDeleteError();
                         }
                         break;
                 }
