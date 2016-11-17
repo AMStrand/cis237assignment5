@@ -105,8 +105,8 @@ namespace assignment1
                 {
                     {
                         //Add the results of calling ToString on the item to the string array.
-                        allItemStrings[counter] = beverage.id + " " + beverage.name + " " + beverage.pack + " " + 
-                            beverage.price.ToString("C2") + " Active: " + beverage.active;
+                        allItemStrings[counter] = beverage.id.PadRight(8) + " " + beverage.name.Trim().PadRight(60) + " " + beverage.pack.Trim().PadRight(20) + " " + 
+                            beverage.price.ToString("C2").PadLeft(10) + "    Active: " + beverage.active;
                         counter++;
                     }
                 }
@@ -128,8 +128,8 @@ namespace assignment1
                 if (beverage.id == id)
                 {
                     //Set the return string to the result of the wineItem's ToString method
-                    returnString = beverage.id + " " + beverage.name.Trim() + " " + beverage.pack.Trim() + " " +
-                            beverage.price.ToString("C2") + " Active: " + beverage.active;
+                    returnString = beverage.id.PadRight(8) + " " + beverage.name.Trim().PadRight(60) + " " + beverage.pack.Trim().PadRight(20) + " " +
+                            beverage.price.ToString("C2").PadLeft(10) + "    Active: " + beverage.active;
                 }
             }
             //Return the returnString

@@ -24,6 +24,9 @@ namespace assignment1
             //Display the Welcome Message to the user
             userInterface.DisplayWelcomeGreeting();
 
+            Console.BufferHeight = 5000;
+            Console.BufferWidth = 150;
+
             //Display the Menu and get the response. Store the response in the choice integer
             //This is the 'primer' run of displaying and getting.
             int choice = userInterface.DisplayMenuAndGetResponse();
